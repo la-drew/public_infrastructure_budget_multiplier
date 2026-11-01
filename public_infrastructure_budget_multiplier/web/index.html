@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Explainable cost and schedule risk estimates for public infrastructure projects.">
+    <title>public_infrastructure_budget_multiplier</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="public_infrastructure_budget_multiplier home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>public_infrastructure_<strong>budget_multiplier</strong></span>
+      </a>
+      <nav aria-label="Primary navigation">
+        <a href="#estimator">Estimator</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#methodology">Methodology</a>
+      </nav>
+      <span class="version">Model v0.1</span>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">PUBLIC INFRASTRUCTURE · DECISION SUPPORT</p>
+          <h1>Plan for the range,<br><em>not just the promise.</em></h1>
+          <p class="hero-copy">Stress-test an early cost and schedule estimate against labor exposure, design maturity, approvals, site conditions, and delivery complexity.</p>
+        </div>
+        <div class="hero-note">
+          <span class="pulse" aria-hidden="true"></span>
+          <div><strong>Explainable by design</strong><br>Every estimate includes its top drivers, assumptions, and confidence level.</div>
+        </div>
+      </section>
+
+      <section class="workspace" id="estimator">
+        <aside class="input-panel">
+          <div class="panel-heading">
+            <div><span class="step">01</span><h2>Project inputs</h2></div>
+            <select id="sample-select" aria-label="Load an example project">
+              <option value="">Load example…</option>
+              <option value="rail">Urban rail extension</option>
+              <option value="water">Water treatment upgrade</option>
+              <option value="bridge">River bridge replacement</option>
+            </select>
+          </div>
+
+          <form id="risk-form">
+            <fieldset>
+              <legend>Project definition</legend>
+              <label class="wide">Project name
+                <input name="name" value="North Corridor Connector" maxlength="120" required>
+              </label>
+              <label>Asset type
+                <select name="project_type">
+                  <option value="road">Road / highway</option>
+                  <option value="bridge">Bridge / tunnel</option>
+                  <option value="rail">Rail / transit</option>
+                  <option value="water">Water / wastewater</option>
+                  <option value="energy">Energy / grid</option>
+                  <option value="public_building">Public building</option>
+                  <option value="broadband">Broadband / digital</option>
+                  <option value="other">Other infrastructure</option>
+                </select>
+              </label>
+              <label>Current phase
+                <select name="phase">
+                  <option value="concept">Concept</option>
+                  <option value="planning" selected>Planning</option>
+                  <option value="preliminary_design">Preliminary design</option>
+                  <option value="final_design">Final design</option>
+                  <option value="procurement">Procurement</option>
+                  <option value="construction">Construction</option>
+                </select>
+              </label>
+              <label>Capital estimate <small>(millions)</small>
+                <span class="input-prefix"><b>$</b><input name="capital_cost" type="number" value="250" min="0.01" max="1000000" step="0.01" required></span>
+              </label>
+              <label>Planned duration <small>(months)</small>
+                <input name="duration_months" type="number" value="48" min="1" max="600" step="1" required>
+              </label>
+              <label>Delivery method
+                <select name="delivery_method">
+                  <option value="design_bid_build">Design–bid–build</option>
+                  <option value="design_build">Design–build</option>
+                  <option value="cmgc">CM/GC</option>
+                  <option value="p3">Public–private partnership</option>
+                </select>
+              </label>
+              <label>Design complete <output for="design_completion_percent">20%</output>
+                <input name="design_completion_percent" type="range" value="20" min="0" max="100" step="5">
+              </label>
+            </fieldset>
+
+            <fieldset>
+              <legend>Cost exposure</legend>
+              <label>Labor share <output for="labor_share_percent">35%</output>
+                <input name="labor_share_percent" type="range" value="35" min="0" max="100" step="1">
+              </label>
+              <label>Labor escalation <small>(annual)</small>
+                <span class="input-suffix"><input name="labor_escalation_percent" type="number" value="4.5" min="-10" max="50" step="0.1"><b>%</b></span>
+              </label>
+              <label>Material escalation <small>(annual)</small>
+                <span class="input-suffix"><input name="material_escalation_percent" type="number" value="4.0" min="-10" max="50" step="0.1"><b>%</b></span>
+              </label>
+              <label>Escalation in estimate
+                <span class="input-suffix"><input name="estimate_escalation_percent" type="number" value="3.0" min="-10" max="50" step="0.1"><b>%</b></span>
+              </label>
+              <label>Budget contingency
+                <span class="input-suffix"><input name="contingency_percent" type="number" value="15" min="0" max="200" step="1"><b>%</b></span>
+              </label>
+            </fieldset>
+
+            <fieldset>
+              <legend>Approvals & complexity</legend>
+              <label>Regulatory bodies
+                <input name="regulatory_bodies" type="number" value="3" min="0" max="100" step="1">
+              </label>
+              <label>Approvals required
+                <input name="approvals_required" type="number" value="6" min="0" max="500" step="1">
+              </label>
+              <label>Approval complexity
+                <select name="approval_complexity">
+                  <option value="1">1 — Routine</option><option value="2">2 — Limited</option>
+                  <option value="3" selected>3 — Moderate</option><option value="4">4 — High</option>
+                  <option value="5">5 — Exceptional</option>
+                </select>
+              </label>
+              <label>Site uncertainty
+                <select name="site_uncertainty">
+                  <option value="1">1 — Well understood</option><option value="2">2 — Low</option>
+                  <option value="3" selected>3 — Moderate</option><option value="4">4 — High</option>
+                  <option value="5">5 — Very high</option>
+                </select>
+              </label>
+              <label class="wide">Stakeholder complexity
+                <select name="stakeholder_complexity">
+                  <option value="1">1 — Aligned</option><option value="2">2 — Limited</option>
+                  <option value="3" selected>3 — Multiple interests</option><option value="4">4 — Contested</option>
+                  <option value="5">5 — Highly contested</option>
+                </select>
+              </label>
+            </fieldset>
+
+            <button class="primary-button" type="submit"><span>Run risk analysis</span><b aria-hidden="true">→</b></button>
+            <p class="form-note">8,000 scenarios · deterministic result · no project data leaves your computer</p>
+          </form>
+        </aside>
+
+        <section class="results-panel" aria-live="polite">
+          <div id="empty-state" class="empty-state">
+            <div class="radar" aria-hidden="true"><i></i><i></i><i></i><span></span></div>
+            <h2>Ready to stress-test</h2>
+            <p>Adjust the assumptions and run the analysis to see a defensible range of outcomes.</p>
+          </div>
+
+          <div id="results" hidden>
+            <div class="result-header">
+              <div>
+                <p class="eyebrow">RISK ANALYSIS</p>
+                <h2 id="result-name">—</h2>
+                <p id="result-meta">—</p>
+              </div>
+              <div class="actions">
+                <button id="save-button" class="ghost-button" type="button">＋ Portfolio</button>
+                <button id="export-button" class="ghost-button" type="button">↓ JSON</button>
+              </div>
+            </div>
+
+            <div class="metric-grid">
+              <article class="metric-card accent-cost">
+                <div class="metric-label">P80 outturn cost <button class="info" data-tip="An 80% modeled chance that outturn cost is at or below this amount." aria-label="What P80 means">i</button></div>
+                <div><strong id="cost-p80">—</strong><span id="cost-variance">—</span></div>
+                <p id="cost-range">—</p>
+              </article>
+              <article class="metric-card accent-time">
+                <div class="metric-label">P80 completion time <button class="info" data-tip="An 80% modeled chance that duration is at or below this amount." aria-label="What P80 means">i</button></div>
+                <div><strong id="time-p80">—</strong><span id="time-variance">—</span></div>
+                <p id="time-range">—</p>
+              </article>
+              <article class="metric-card">
+                <div class="metric-label">Budget exceedance</div>
+                <div><strong id="budget-probability">—</strong><span id="budget-label">—</span></div>
+                <p id="budget-value">—</p>
+              </article>
+              <article class="metric-card">
+                <div class="metric-label">Estimate confidence</div>
+                <div><strong id="confidence-score">—</strong><span id="confidence-label">—</span></div>
+                <p>Input maturity & uncertainty</p>
+              </article>
+            </div>
+
+            <div class="range-card">
+              <div class="card-title"><div><span class="step">02</span><h3>Outcome ranges</h3></div><span>P10 — P90</span></div>
+              <div id="range-visuals"></div>
+            </div>
+
+            <div class="driver-card">
+              <div class="card-title"><div><span class="step">03</span><h3>Primary cost drivers</h3></div><span>Expected effect</span></div>
+              <div id="driver-list"></div>
+            </div>
+
+            <div class="interpretation" id="interpretation"></div>
+          </div>
+          <div id="error-message" class="error-message" role="alert" hidden></div>
+        </section>
+      </section>
+
+      <section class="portfolio-section" id="portfolio">
+        <div class="section-heading"><div><p class="eyebrow">LOCAL WORKSPACE</p><h2>Project portfolio</h2></div><p>Save analyses to compare risk-adjusted funding and delivery assumptions. Data stays in this browser.</p></div>
+        <div class="portfolio-table-wrap">
+          <table>
+            <thead><tr><th>Project</th><th>Type / phase</th><th>Baseline</th><th>P80 cost</th><th>P80 duration</th><th>Budget risk</th><th><span class="sr-only">Actions</span></th></tr></thead>
+            <tbody id="portfolio-body"><tr class="portfolio-empty"><td colspan="7">No saved projects yet. Run an analysis and select “Portfolio.”</td></tr></tbody>
+          </table>
+        </div>
+        <button id="portfolio-export" class="text-button" type="button" hidden>Export portfolio CSV ↓</button>
+      </section>
+
+      <section class="method-section" id="methodology">
+        <div><p class="eyebrow">OPEN METHODOLOGY</p><h2>A transparent starting point,<br>built to be calibrated.</h2></div>
+        <div class="method-grid">
+          <article><span>01</span><h3>Baseline exposure</h3><p>Capital size, labor and materials are exposed to modeled escalation over the project midpoint.</p></article>
+          <article><span>02</span><h3>Project uncertainty</h3><p>Phase, design maturity, approvals, site conditions, and stakeholders drive correlated cost and time events.</p></article>
+          <article><span>03</span><h3>Scenario distribution</h3><p>8,000 seeded simulations produce repeatable P10, P50, P80, and P90 planning ranges.</p></article>
+          <article><span>04</span><h3>Local calibration</h3><p>Starter coefficients are visible in the source and should be replaced with an agency’s own forecast-error data.</p></article>
+        </div>
+        <div class="disclaimer"><strong>Planning aid, not a forecast.</strong> Results are sensitive to inputs and starter assumptions. They do not replace quantity takeoffs, independent cost estimates, legal review, scheduling analysis, or project-specific risk workshops.</div>
+      </section>
+    </main>
+
+    <footer><span>public_infrastructure_budget_multiplier · Open source under MIT</span><span>Evidence-aware, locally run, auditable.</span></footer>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
+

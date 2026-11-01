@@ -1,0 +1,6 @@
+name,project_type,phase,capital_cost,duration_months,labor_share_percent,labor_escalation_percent,material_escalation_percent,estimate_escalation_percent,regulatory_bodies,approvals_required,approval_complexity,design_completion_percent,site_uncertainty,stakeholder_complexity,delivery_method,contingency_percent
+Eastside Rapid Transit Extension,rail,planning,1450,84,42,5.2,4.6,3.0,7,14,4,15,4,5,design_build,20
+Regional Water Treatment Upgrade,water,preliminary_design,380,54,36,4.4,4.1,3.0,5,9,4,35,3,2,cmgc,18
+Grand River Bridge Replacement,bridge,final_design,620,60,39,4.7,5.1,3.2,6,11,3,72,4,3,design_bid_build,12
+Rural Fiber Backbone,broadband,procurement,95,30,28,4.0,3.8,3.0,3,7,2,85,2,2,design_build,10
+
